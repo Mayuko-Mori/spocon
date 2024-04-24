@@ -1,12 +1,17 @@
 import numpy as np
 import pandas as pd
 from scipy.interpolate import interp2d
+import os
 
 keys = np.arange(1700, 5100, 100)
 df_contrasts = {}
 
+module_dir = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(module_dir, 'data')
+
 for key in keys:
-    cs = pd.read_csv(f'/ut3/mori/work/git_repo/spot_contrast/spocon/data/contrast_{key}_new.csv').drop('Unnamed: 0', axis=1)
+    csv_file = os.path.join(data_dir, f'contrast_{key}_new.csv')
+    cs = pd.read_csv(csv_file).drop('Unnamed: 0', axis=1)
     df_contrasts[key] = cs
 
 def contrast(Ts, Tp, b):
