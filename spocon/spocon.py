@@ -50,6 +50,6 @@ def estimate_Tspot_emp(Tp, model='Herbst2'):
     Ts_low = w1 * Tp**2 + (w2-e_w2) * Tp + (w3-e_w3)
     Ts_up = w1 * Tp**2 + (w2+e_w2) * Tp + (w3+e_w3)
     
-    return Ts_low, Ts, Ts_up
+    return np.round(Ts_low), np.round(Ts), np.round(Ts_up)
 
     
