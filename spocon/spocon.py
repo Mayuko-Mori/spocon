@@ -15,6 +15,15 @@ for key in keys:
     df_contrasts[key] = cs
 
 def contrast(Ts, Tp, b):
+    
+    min_temp, max_temp = 1700, 5000
+
+    if not (min_temp <= Ts <= max_temp):
+        raise ValueError(f"Tspot value = {Ts}K is out of bound ({min_temp} to {max_temp}K)!")
+    
+    if not (min_temp <= Tp <= max_temp):
+        raise ValueError(f"Tphot value = {Ts}K is out of bound ({min_temp} to {max_temp}K)!")
+    
     keys = np.array(sorted(df_contrasts.keys()))
     ts_values = np.array(df_contrasts[keys[0]]['Tspot'])
     Ts_mesh, Tp_mesh = np.meshgrid(ts_values, keys)
@@ -29,8 +38,8 @@ def contrast(Ts, Tp, b):
 def estimate_Tspot_emp(Tp, model='Herbst2'):
     
     # empirical relations from Herbst+21
-    # model 'Herbst1' : Eq.(3) in Herbst+21, derived from the sample in Berdyugina05
-    # model 'Herbst2' : Eq.(5) in Herbst+21, derived from the sample in Berdyugina05, Biazzo+06, Valio17
+    # model 'Herbst1' : Eq.(4) in Herbst+21, derived from the sample in Berdyugina05
+    # model 'Herbst2' : Eq.(5) (typo in the paper) in Herbst+21, derived from the sample in Berdyugina05, Biazzo+06, Valio17
     
     w1 = -3.58e-5
     
@@ -43,7 +52,7 @@ def estimate_Tspot_emp(Tp, model='Herbst2'):
     if model == 'Herbst2':
         w2 = 1.0188
         e_w2 = 0.068
-        w3 = 239.3
+        w3 = -239.3
         e_w3 = 317.8
     
     Ts = w1 * Tp**2 + w2 * Tp + w3
