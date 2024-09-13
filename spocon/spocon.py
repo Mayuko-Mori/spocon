@@ -17,12 +17,15 @@ for key in keys:
 def contrast(Ts, Tp, b):
     
     min_temp, max_temp = 1700, 5000
-
-    if not (min_temp <= Ts <= max_temp):
-        raise ValueError(f"Tspot value = {Ts}K is out of bound ({min_temp} to {max_temp}K)!")
     
-    if not (min_temp <= Tp <= max_temp):
-        raise ValueError(f"Tphot value = {Ts}K is out of bound ({min_temp} to {max_temp}K)!")
+    Ts = np.asarray(Ts)
+    Tp = np.asarray(Tp)
+
+    if np.any(Ts < min_temp) or np.any(Ts > max_temp):
+        raise ValueError(f"Tspot value(s) out of bound. Values: {Ts[np.where((Ts < min_temp) | (Ts > max_temp))]} are out of bound ({min_temp} to {max_temp}K)!")
+
+    if np.any(Tp < min_temp) or np.any(Tp > max_temp):
+        raise ValueError(f"Tphot value(s) out of bound. Values: {Tp[np.where((Tp < min_temp) | (Tp > max_temp))]} are out of bound ({min_temp} to {max_temp}K)!")
     
     keys = np.array(sorted(df_contrasts.keys()))
     ts_values = np.array(df_contrasts[keys[0]]['Tspot'])
