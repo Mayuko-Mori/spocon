@@ -25,3 +25,31 @@ def contrast(Ts, Tp, b):
     interpolated_values = interp_func(Ts, Tp)
 
     return interpolated_values
+
+def estimate_Tspot_emp(Tp, model='Herbst2'):
+    
+    # empirical relations from Herbst+21
+    # model 'Herbst1' : Eq.(3) in Herbst+21, derived from the sample in Berdyugina05
+    # model 'Herbst2' : Eq.(5) in Herbst+21, derived from the sample in Berdyugina05, Biazzo+06, Valio17
+    
+    w1 = -3.58e-5
+    
+    if model == 'Herbst1':
+        w2 = 0.801
+        e_w2 = 0.065
+        w3 = 666.5
+        e_w3 = 280.3
+    
+    if model == 'Herbst2':
+        w2 = 1.0188
+        e_w2 = 0.068
+        w3 = 239.3
+        e_w3 = 317.8
+    
+    Ts = w1 * Tp**2 + w2 * Tp + w3
+    Ts_low = w1 * Tp**2 + (w2-e_w2) * Tp + (w3-e_w3)
+    Ts_up = w1 * Tp**2 + (w2+e_w2) * Tp + (w3+e_w3)
+    
+    return Ts_low, Ts, Ts_up
+
+    
