@@ -1,3 +1,20 @@
+A lightweight tool to estimate starspot contrast and temperature using BT-Settl models.
+
+## Installation
+
+Clone the repository and install in editable mode:
+
+```bash
+git clone https://github.com/your-username/spocon.git
+cd spocon
+pip install -e .
+```
+
+Alternatively, you can add the directory to your PYTHONPATH:
+```bash
+export PYTHONPATH=/path/to/spocon:$PYTHONPATH
+```
+
 # spocon.contrast
 To calculate spot contrast for given spot temperature, photosphere temperature and filters, based on BT-Settl models.
 This code is applicable to spot/photosphere temperatures from 1700K to 5000K.
