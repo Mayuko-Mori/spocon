@@ -120,7 +120,7 @@ def contrast(Ts, Tp, b):
         [df_contrasts[key][b].to_numpy(dtype=float) for key in grid_tp]
     )
 
-    interpolated_values = _bilinear_interp_2d(
+    result = _bilinear_interp_2d(
         x=Ts,
         y=Tp,
         xgrid=grid_ts,
@@ -128,7 +128,7 @@ def contrast(Ts, Tp, b):
         values=contrast_values,
     )
 
-    return interpolated_values
+    return result.item() if result.shape == () else result
 
 
 def estimate_Tspot_emp(Tp, model='Herbst2'):
